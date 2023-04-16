@@ -46,6 +46,7 @@ public class UIManager : MonoBehaviour
         mainMenu.SetActive(true);
         gameplayMenu.SetActive(false);
         pauseMenu.SetActive(false);
+        UpdateScore();
         UpdateHighScore();
     }
 

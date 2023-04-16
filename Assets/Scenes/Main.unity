@@ -156,6 +156,7 @@ MonoBehaviour:
   xPos: 11.5
   minY: -4.6
   maxY: 4.6
+  torque: 10
 --- !u!4 &124483451
 Transform:
   m_ObjectHideFlags: 0
@@ -208,7 +209,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -30.00058, y: 10.5}
+  m_AnchoredPosition: {x: -30.000885, y: 47.700012}
   m_SizeDelta: {x: 52, y: 9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &187615786
@@ -2747,7 +2748,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -30.00058, y: -2.7600098}
+  m_AnchoredPosition: {x: -30.000885, y: 34.439972}
   m_SizeDelta: {x: 50, y: 8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1758116078
