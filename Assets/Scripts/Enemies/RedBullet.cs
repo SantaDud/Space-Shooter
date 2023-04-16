@@ -1,17 +1,23 @@
 using UnityEngine;
 
-public class RedBullet : MonoBehaviour
+public class RedBullet : Bullet
 {
-    [SerializeField] Rigidbody2D rb;
-    [SerializeField] float speed;
-
     void Start()
     {
         rb.velocity = Vector2.left * speed;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(gameObject);
+        if (collision.CompareTag("Player"))
+        {
+            Player playerInstance = FindObjectOfType<Player>();
+
+            if (playerInstance)
+                playerInstance.ReduceHealth(damage);
+        }
+
+        if (!collision.CompareTag("Enemy"))
+            base.OnTriggerEnter2D(collision);
     }
 }

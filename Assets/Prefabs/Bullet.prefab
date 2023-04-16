@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4858386033582241674}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,6 +128,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: -8365219711225826564}
   speed: 10
+  afterEffect: {fileID: 3766326499027972713, guid: 2c8132a93bc557641ac50f158d8f6d40, type: 3}
+  damage: 30
 --- !u!58 &4858386033582241674
 CircleCollider2D:
   m_ObjectHideFlags: 0

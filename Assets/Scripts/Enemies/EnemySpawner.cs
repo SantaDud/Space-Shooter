@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -7,21 +6,36 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] float positionX;
     [SerializeField] float minY;
     [SerializeField] float maxY;
+    float positionY;
+    public GameObject spawnEffect;
+    public bool spawnAnother = true;
+
+    public static EnemySpawner Instance;
 
     private void Awake()
     {
-        StartCoroutine("Spawn");
+        if (Instance == null)
+            Instance = this;
+
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
     }
 
-    private IEnumerator Spawn()
+    public void Spawn()
     {
-        while (true)
+        if (spawnAnother)
         {
-            float spawnDelay = Random.Range(10f, 20f);
-            yield return new WaitForSeconds(spawnDelay);
-
-            float y = Random.Range(minY, maxY);
-            Instantiate(enemyPrefab, new Vector2(positionX, y), enemyPrefab.transform.rotation);
+            positionY = Random.Range(minY, maxY);
+            Destroy(Instantiate(spawnEffect, new Vector2(positionX, positionY), enemyPrefab.transform.rotation), 0.5f);
+            Invoke("CreateEnemy", 0.75f);
         }
+    }
+
+    public void CreateEnemy()
+    {
+        Instantiate(enemyPrefab, new Vector2(positionX, positionY), enemyPrefab.transform.rotation);
     }
 }

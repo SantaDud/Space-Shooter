@@ -21,24 +21,30 @@ public class EnemyMovement : MonoBehaviour
             float y = Random.Range(minY, maxY);
 
             if (transform.position.y < y)
-                MoveUpToPosition(y);
+                StartCoroutine(MoveUpToPosition(y));
 
             else if (transform.position.y > y)
-                MoveDownToPosition(y);
+                StartCoroutine(MoveDownToPosition(y));
 
             yield return new WaitForSeconds(movementDelay);
         }
     }
 
-    void MoveUpToPosition(float positionY)
+    IEnumerator MoveUpToPosition(float positionY)
     {
         while (transform.position.y < positionY)
+        {
             transform.position = new Vector2(transform.position.x, transform.position.y + speed * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
     }
 
-    void MoveDownToPosition(float positionY)
+    IEnumerator MoveDownToPosition(float positionY)
     {
         while (transform.position.y > positionY)
+        {
             transform.position = new Vector2(transform.position.x, transform.position.y - speed * Time.deltaTime);
+            yield return new WaitForEndOfFrame();
+        }
     }
 }
