@@ -4,9 +4,9 @@ public class MeteorSpawner : MonoBehaviour
 {
     public static MeteorSpawner Instance;
     public GameObject meteor;
-    public float xPos;
-    [SerializeField] float minY;
-    [SerializeField] float maxY;
+    public float yPos;
+    [SerializeField] float minX;
+    [SerializeField] float maxX;
     public float torque;
 
     private void Awake()
@@ -21,14 +21,14 @@ public class MeteorSpawner : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        Spawn();
-    }
+    //private void Start()
+    //{
+    //    Spawn();
+    //}
 
     public void Spawn()
     {
-        GameObject meteorInstance = Instantiate(meteor, new Vector3(xPos, Random.Range(minY, maxY)), Quaternion.identity);
+        GameObject meteorInstance = Instantiate(meteor, new Vector3(Random.Range(minX, maxX), yPos), Quaternion.identity);
         meteorInstance.GetComponent<Rigidbody2D>().AddTorque(torque);
     }
 }

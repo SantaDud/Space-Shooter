@@ -2,10 +2,7 @@ using UnityEngine;
 
 public class RedBullet : Bullet
 {
-    void Start()
-    {
-        rb.velocity = Vector2.left * speed;
-    }
+    public void SpeedUp() => rb.velocity = Vector2.down * speed;
 
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
@@ -17,7 +14,7 @@ public class RedBullet : Bullet
                 playerInstance.ReduceHealth(damage);
         }
 
-        if (!collision.CompareTag("Enemy"))
+        if (!collision.CompareTag("Enemy") && !collision.CompareTag("Powerup") && !collision.CompareTag("EnemyBullet"))
             base.OnTriggerEnter2D(collision);
     }
 }

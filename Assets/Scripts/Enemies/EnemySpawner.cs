@@ -3,10 +3,10 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] GameObject enemyPrefab;
-    [SerializeField] float positionX;
-    [SerializeField] float minY;
-    [SerializeField] float maxY;
-    float positionY;
+    float positionX;
+    [SerializeField] float positionY;
+    [SerializeField] float minX;
+    [SerializeField] float maxX;
     public GameObject spawnEffect;
     public bool spawnAnother = true;
 
@@ -28,7 +28,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (spawnAnother)
         {
-            positionY = Random.Range(minY, maxY);
+            positionX = Random.Range(minX, maxX);
             Destroy(Instantiate(spawnEffect, new Vector2(positionX, positionY), enemyPrefab.transform.rotation), 0.5f);
             Invoke("CreateEnemy", 0.75f);
         }

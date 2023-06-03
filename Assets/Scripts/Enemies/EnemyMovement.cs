@@ -5,20 +5,26 @@ public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rb;
     [SerializeField] float speed;
+    [SerializeField] float minX;
+    [SerializeField] float maxX;
     [SerializeField] float minY;
     [SerializeField] float maxY;
 
-    private void Start()
-    {
-        StartCoroutine("RandomMovement");
-    }
+    public void StartMovement() => StartCoroutine("RandomMovement");
 
     IEnumerator RandomMovement()
     {
         while (true)
         {
-            float movementDelay = Random.Range(0.5f, 2.0f);
+            float movementDelay = Random.Range(2.5f, 7.25f);
+            float x = Random.Range(minX, maxX);
             float y = Random.Range(minY, maxY);
+
+            if (transform.position.x < x)
+                StartCoroutine(MoveRightToPosition(x));
+
+            else if (transform.position.x > x)
+                StartCoroutine(MoveLeftToPosition(x));
 
             if (transform.position.y < y)
                 StartCoroutine(MoveUpToPosition(y));
@@ -27,6 +33,24 @@ public class EnemyMovement : MonoBehaviour
                 StartCoroutine(MoveDownToPosition(y));
 
             yield return new WaitForSeconds(movementDelay);
+        }
+    }
+
+    IEnumerator MoveLeftToPosition(float positionX)
+    {
+        while (transform.position.x > positionX)
+        {
+            transform.position = new Vector2(transform.position.x - speed * Time.deltaTime, transform.position.y);
+            yield return new WaitForEndOfFrame();
+        }
+    }
+
+    IEnumerator MoveRightToPosition(float positionX)
+    {
+        while (transform.position.x < positionX)
+        {
+            transform.position = new Vector2(transform.position.x + speed * Time.deltaTime, transform.position.y);
+            yield return new WaitForEndOfFrame();
         }
     }
 

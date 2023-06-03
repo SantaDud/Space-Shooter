@@ -1,17 +1,23 @@
 public class Enemy : SpaceShip
 {
+    protected override void Start()
+    {
+        GameManager.cleanUp += CleanUp;
+        base.Start();
+    }
+
     protected override void DestroySpaceShip()
     {
+        GameManager.cleanUp -= CleanUp;
+        
+        if (GameManager.Instance.IsTrue(2f, 1.9f))
+            Powerups.Instance.SpawnPowerup(transform.position);
+        
         base.DestroySpaceShip();
         GameManager.Instance.score++;
         UIManager.Instance.UpdateScore();
-        EnemySpawner.Instance.Spawn();
-        MeteorSpawner.Instance.Spawn();
+        FindObjectOfType<Level>().UpdateKills();
     }
 
-    protected override void SetHealth(int health)
-    {
-        base.SetHealth(health);
-        healthBarFill.fillAmount = health / 100.0f;
-    }
+    void CleanUp() => base.DestroySpaceShip();
 }

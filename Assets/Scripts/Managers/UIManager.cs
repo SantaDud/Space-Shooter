@@ -3,15 +3,20 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] GameObject gameplayMenu;
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject pauseMenu;
 
+    [Header("HealthBars")]
     public GameObject playerHealthBar;
-    public GameObject enemyHealthBar;
 
+    [Header("Score")]
     public TMPro.TextMeshProUGUI score;
     public TMPro.TextMeshProUGUI highScore;
+
+    [Header("Gameplay")]
+    [SerializeField] GameObject gameplayMenu;
+    public TMPro.TextMeshProUGUI waveText;
+    public TMPro.TextMeshProUGUI levelText;
 
     public static UIManager Instance;
 
@@ -29,10 +34,7 @@ public class UIManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
-    {
-        ResetMenu();
-    }
+    private void Start() => ResetMenu();
 
     public void StartGame()
     {
@@ -50,13 +52,31 @@ public class UIManager : MonoBehaviour
         UpdateHighScore();
     }
 
-    public void UpdateScore()
+    public void SetLevelInfoText(int level)
     {
-        score.text = GameManager.Instance.score.ToString();
+        FindObjectOfType<PlayerShooting>().EnableShooting(false);
+
+        levelText.text = $"{level}";
+        levelText.transform.parent.GetComponent<Animator>().SetTrigger("LevelSlide");
+        Time.timeScale = 0.5f;
+        Invoke("CorrectTimeScale", .5f);
     }
 
-    public void UpdateHighScore()
+    public void SetWaveInfoText(int currentWaveNumber, int totalWaves)
     {
-        highScore.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
+        FindObjectOfType<PlayerShooting>().EnableShooting(false);
+        waveText.text = $"{currentWaveNumber} / {totalWaves}";
+        waveText.transform.parent.GetComponent<Animator>().SetTrigger("Slide");
+        Time.timeScale = 0.5f;
+        Invoke("CorrectTimeScale", .5f);
+        Invoke("EnablePlayerShooting", .5f);
     }
+
+    public void UpdateScore() => score.text = GameManager.Instance.score.ToString();
+
+    public void UpdateHighScore() => highScore.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
+
+    void CorrectTimeScale() => Time.timeScale = 1f;
+
+    void EnablePlayerShooting() => FindObjectOfType<PlayerShooting>().EnableShooting();
 }
